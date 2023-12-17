@@ -12,11 +12,19 @@ private:
 protected:
 	sf::RenderWindow* window;
 
+	std::map<std::string, int>* supportedKeys;
+	std::map<std::string, int> keybinds;
+	bool quit;
+
+
+	//resurs
 	std::vector<sf::Texture> texture;
 
-	bool quit;
+	//fun
+	virtual void initKeybinds() = 0;
+
 public:
-	State(sf::RenderWindow* window);
+	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
 	virtual ~State();
 
 	const bool& getQuit() const;

@@ -8,8 +8,12 @@ class GameState :
 {
 private:
     Entity player;
+
+    //func
+
+    void initKeybinds();
 public:
-    GameState(sf::RenderWindow* window);
+    GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys);
     virtual ~GameState();
 
 
