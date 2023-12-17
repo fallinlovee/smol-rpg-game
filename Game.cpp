@@ -33,15 +33,34 @@ void Game::initWindow()
        this->window->setVerticalSyncEnabled(vertical_sync_enaled);
 }
 
+void Game::initStates()
+{
+    this->states.push(new GameState(this->window));
+}
+
 Game::Game()
 {
     this->initWindow();
-
+    this->initStates();
 }
 
 Game::~Game()
 {
-	delete this->window;
+    delete this->window;
+
+    while (!this->states.empty())
+    {
+        delete this->states.top();
+        this->states.pop();
+    }
+}
+
+
+//func
+
+void Game::endApplication()
+{
+    std::cout << "ending app" << "\n";
 }
 
 void Game::uadateDt()
@@ -68,7 +87,24 @@ void Game::updateSFMLEvents()
 void Game::update()
 {
     this->updateSFMLEvents();
-
+    if (!this->states.empty())
+    {
+        this->states.top()->update(this->dt);
+        if (this->states.top()->getQuit())
+        {
+            //some aa
+            this->states.top()->endState();
+            delete this->states.top();
+            this->states.pop();
+        }
+    }
+    //app end
+    else
+    {
+        this->endApplication();
+        this->window->close();
+    }
+ 
 }
 
 void Game::render()
@@ -77,9 +113,11 @@ void Game::render()
     this->window->clear();
 
     //render item
+    if (!this->states.empty())
+        this->states.top()->render(this->window);
 
     this->window->display();
-
+    
 
 }
 
