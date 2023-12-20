@@ -6,45 +6,49 @@
 class Game
 {
 private:
-
-	
+	//Variables
+	GraphicsSettings gfxSettings;
+	StateData stateData;
 	sf::RenderWindow *window;
 	sf::Event sfEvent;
-	
 
 	sf::Clock dtClock;
 	float dt;
-
 
 	std::stack<State*> states;
 
 	std::map<std::string, int> supportedKeys;
 
+	float gridSize;
+
+	//Initialization
+	void initVariables();
+	void initGraphicsSettings();
 	void initWindow();
 	void initKeys();
+	void initStateData();
 	void initStates();
 
-
 public:
+	//Constructors/Destructors
 	Game();
 	virtual ~Game();
 
-	//function
-	// 
-	// 
-	//regular app}
+	//Functions
 
+	//Regular
 	void endApplication();
-	
-	//UPDATE
-	void uadateDt();
+
+	//Update
+	void updateDt();
 	void updateSFMLEvents();
 	void update();
 
-	//rend
+	//Render
 	void render();
 
-	//core
+	//Core
 	void run();
 };
+
 #endif

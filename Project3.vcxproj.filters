@@ -21,45 +21,131 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+    <None Include="text.slmp">
+      <Filter>States</Filter>
+    </None>
+    <None Include="stdafx.h.gch">
+      <Filter>States</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AnimationComponent.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="AttributeComponent.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>States</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>States</Filter>
     </ClCompile>
     <ClCompile Include="GameState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsSettings.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="HitboxComponent.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGUI.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsState.cpp">
       <Filter>States</Filter>
     </ClCompile>
     <ClCompile Include="State.cpp">
       <Filter>States</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Enteties</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenuState.cpp">
+    <ClCompile Include="stdafx.cpp">
       <Filter>States</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Resource Files</Filter>
+    <ClCompile Include="Tile.cpp">
+      <Filter>States</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="TileMap.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>States</Filter>
+    <ClInclude Include="AnimationComponent.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>States</Filter>
+    <ClInclude Include="AttributeComponent.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorState.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Enteties</Filter>
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsSettings.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HitboxComponent.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuState.h">
-      <Filter>States</Filter>
+      <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMenu.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGUI.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsState.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>

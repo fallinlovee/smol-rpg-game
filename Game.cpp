@@ -1,167 +1,170 @@
+#include "stdafx.h"
 #include "Game.h"
 
-//str
+//Static functions
 
-//initi
+//Initializer functions
+void Game::initVariables()
+{
+	this->window = NULL;
 
-//
+	this->dt = 0.f;
+
+	this->gridSize = 64.f;
+}
+
+void Game::initGraphicsSettings()
+{
+	this->gfxSettings.loadFromFile("Config/graphics.ini");
+}
 
 void Game::initWindow()
 {
-       std::ifstream ifs("Config/window.ini");
+	/*Creates a SFML window.*/
 
-       std::string title= "None";
-       sf::VideoMode window_bounds(800, 600);
-       unsigned framerate_limit = 120;
-       bool vertical_sync_enaled = false;
+	if(this->gfxSettings.fullscreen)
+		this->window = new sf::RenderWindow(
+			this->gfxSettings.resolution, 
+			this->gfxSettings.title, 
+			sf::Style::Fullscreen, 
+			this->gfxSettings.contextSettings);
+	else
+		this->window = new sf::RenderWindow(
+			this->gfxSettings.resolution,
+			this->gfxSettings.title,
+			sf::Style::Titlebar | sf::Style::Close, 
+			this->gfxSettings.contextSettings);
 
-
-
-       if (ifs.is_open())
-       {
-           std::getline(ifs, title);
-           ifs >> window_bounds.width >> window_bounds.height;
-           ifs >> framerate_limit;
-           ifs >> vertical_sync_enaled;
-
-       }
-       
-       ifs.close();
-
-	   this->window = new sf::RenderWindow(window_bounds, title);
-       this->window->setFramerateLimit(framerate_limit);
-       this->window->setVerticalSyncEnabled(vertical_sync_enaled);
+	this->window->setFramerateLimit(this->gfxSettings.frameRateLimit);
+	this->window->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
 }
 
 void Game::initKeys()
 {
-    std::ifstream ifs("Config/supported_keys.ini");
+	std::ifstream ifs("Config/supported_keys.ini");
 
-    if (ifs.is_open())
+	if (ifs.is_open())
+	{
+		std::string key = "";
+		int key_value = 0;
+		
+		while (ifs >> key >> key_value)
+		{
+			this->supportedKeys[key] = key_value;
+		}
+	}
 
-    {
-        std::string key = "";
-        int key_value = 0;
+	ifs.close();
 
-        while (ifs >> key >> key_value)
-        {
-            this->supportedKeys[key] = key_value;
-        }
-    }
-    ifs.close();
+//DEBUG REMOVE LATER!
+	for (auto i : this->supportedKeys)
+	{
+		std::cout << i.first << " " << i.second << "\n";
+	} 
+}
 
-
-
-    //SEBUG removr
-    for (auto i : this->supportedKeys)
-    {
-        std::cout << " " << i.second << "\n ";
-    }
-
+void Game::initStateData()
+{
+	this->stateData.window = this->window;
+	this->stateData.gfxSettings = &this->gfxSettings;
+	this->stateData.supportedKeys = &this->supportedKeys;
+	this->stateData.states = &this->states;
+	this->stateData.gridSize = this->gridSize;
 }
 
 void Game::initStates()
 {
-    this->states.push(new MainMenuState(this->window, &this->supportedKeys));
-
+	this->states.push(new MainMenuState(&this->stateData));
 }
 
-
-
+//Constructors/Destructors
 Game::Game()
 {
-
-    this->initWindow();
-    this->initKeys();
-    this->initStates();
-
+	this->initVariables();
+	this->initGraphicsSettings();
+	this->initWindow();
+	this->initKeys();
+	this->initStateData();
+	this->initStates();
 }
 
 Game::~Game()
 {
-    delete this->window;
+	delete this->window;
 
-    while (!this->states.empty())
-    {
-        delete this->states.top();
-        this->states.pop();
-    }
+	while (!this->states.empty())
+	{
+		delete this->states.top();
+		this->states.pop();
+	}
 }
 
-
-//func
-
+//Functions
 void Game::endApplication()
 {
-    std::cout << "ending app" << "\n";
+	std::cout << "Ending Application!" << "\n";
 }
 
-void Game::uadateDt()
+void Game::updateDt()
 {
+	/*Updates the dt variable with the time it takes to update and render one frame.*/
 
-    /*updates th dt variable with takes update*/
-
-    this->dt = this->dtClock.restart().asSeconds();
-    system("cls");
-    std::cout << this->dt << "\n";
-
+	this->dt = this->dtClock.restart().asSeconds();
 }
 
 void Game::updateSFMLEvents()
 {
-    sf::Event event;
-    while (this->window->pollEvent(this->sfEvent))
-    {
-     if (this->sfEvent.type == sf::Event::Closed)
-         this->window->close();
-    }
+	while (this->window->pollEvent(this->sfEvent))
+	{
+		if (this->sfEvent.type == sf::Event::Closed)
+			this->window->close();
+	}
 }
 
 void Game::update()
 {
-    this->updateSFMLEvents();
-    if (!this->states.empty())
-    {
-        this->states.top()->update(this->dt);
-        if (this->states.top()->getQuit())
-        {
-            //some aa
-            this->states.top()->endState();
-            delete this->states.top();
-            this->states.pop();
-        }
-    }
-    //app end
-    else
-    {
-        this->endApplication();
-        this->window->close();
-    }
- 
+	this->updateSFMLEvents();
+
+	if (!this->states.empty())
+	{
+		if (this->window->hasFocus())
+		{
+			this->states.top()->update(this->dt);
+
+			if (this->states.top()->getQuit())
+			{
+				this->states.top()->endState();
+				delete this->states.top();
+				this->states.pop();
+			}
+		}
+	}
+	//Application end
+	else
+	{
+		this->endApplication();
+		this->window->close();
+	}
 }
 
 void Game::render()
 {
+	this->window->clear();
 
-    this->window->clear();
+	//Render items
+	if (!this->states.empty())
+		this->states.top()->render();
 
-    //render item
-    if (!this->states.empty())
-        this->states.top()->render(this->window);
-
-    this->window->display();
-    
-
+	this->window->display();
 }
 
 void Game::run()
 {
-
-    while (this->window->isOpen())
-    {
-        this->uadateDt();
-        this->update();
-        this->render();
-    }
+	while (this->window->isOpen())
+	{
+		this->updateDt();
+		this->update();
+		this->render();
+	}
 }
 
